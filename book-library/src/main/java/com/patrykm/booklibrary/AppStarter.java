@@ -1,6 +1,8 @@
 package com.patrykm.booklibrary;
 
 import com.patrykm.booklibrary.domain.Book;
+import com.patrykm.booklibrary.repository.BookRepository;
+import com.patrykm.booklibrary.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
@@ -27,6 +29,9 @@ public class AppStarter implements CommandLineRunner {
     @Value("${spring.pagesize:25}") //wartość awaryjna
     Integer size;*/
 
+    @Autowired
+    //BookRepository bookRepository;
+    BookService bookService;
 
     @Override
     public void run(String... args) throws Exception {
@@ -36,7 +41,17 @@ public class AppStarter implements CommandLineRunner {
         System.out.println(size);
         System.out.println(book2);
         System.out.println(book == book2);*/
+        init();
 
+    }
+
+    public void init(){
+        Book book = new Book("W pustyni",1951,"PWN","kjhkh344346","Mieczysław Bąk");
+        //bookRepository.saveBook(book);
+        bookService.saveBook(book);
+
+        Book book2 = new Book("i W puszczy",1952,"PWN","kjhkh344347","Mieczysław Bąk");
+        bookService.saveBook(book2);
     }
 
     /*@Autowired

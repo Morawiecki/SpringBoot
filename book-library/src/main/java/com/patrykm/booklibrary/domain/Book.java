@@ -17,16 +17,18 @@ public class Book {
     private int year;
     private String publisher;
     private String isbn;
+    private String author;
 
     public Book(){
 
     }
 
-    public Book(String title, int year, String publisher, String isbn) {
+    public Book(String title, int year, String publisher, String isbn, String author) {
         this.title = title;
         this.year = year;
         this.publisher = publisher;
         this.isbn = isbn;
+        this.author = author;
     }
 
     /*
@@ -76,6 +78,14 @@ public class Book {
 
     public void setIsbn(String isbn) {
         this.isbn = isbn;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     @Override
