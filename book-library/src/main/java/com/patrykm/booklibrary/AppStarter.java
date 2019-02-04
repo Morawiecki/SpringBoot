@@ -1,5 +1,6 @@
 package com.patrykm.booklibrary;
 
+import com.patrykm.booklibrary.domain.Author;
 import com.patrykm.booklibrary.domain.Book;
 import com.patrykm.booklibrary.repository.BookRepository;
 import com.patrykm.booklibrary.services.BookService;
@@ -46,12 +47,15 @@ public class AppStarter implements CommandLineRunner {
     }
 
     public void init(){
-        Book book = new Book("W pustyni",1951,"PWN","kjhkh344346","Mieczysław Bąk");
+        Book book = new Book("W pustyni",1951,"PWN","kjhkh344346",new Author("Mieczysław Bąk"));
         //bookRepository.saveBook(book);
         bookService.saveBook(book);
 
-        Book book2 = new Book("i W puszczy",1952,"PWN","kjhkh344347","Mieczysław Bąk");
+        Book book2 = new Book("I w puszczy",1952,"PWN","kjhkh344347",new Author("Mieczysław Bąk junior"));
         bookService.saveBook(book2);
+
+        Book book3 = new Book("I w kamieniołomach",1952,"PWN","kjhkh344347",new Author("Mieczysław Bąk"));
+        bookService.saveBook(book3);
     }
 
     /*@Autowired

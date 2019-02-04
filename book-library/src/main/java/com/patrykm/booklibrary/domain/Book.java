@@ -1,6 +1,12 @@
 package com.patrykm.booklibrary.domain;
 
+import org.hibernate.validator.constraints.Range;
+
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 //@Table(name = "book")
@@ -13,17 +19,26 @@ public class Book {
     private int id;
 
     //@Column(name = "bookTitle")
+
+    @NotNull
+    @Size(min = 2, message = "Tytuł musi posiadać co najmniej 2 litery")
     private String title;
+
+    @NotNull
+    @Range(min = 1, max = 9999, message = "Rok wydania musi być z przedziału 1 - 9999")
     private int year;
+
     private String publisher;
     private String isbn;
-    private String author;
+
+    @OneToOne
+    private Author author;
 
     public Book(){
 
     }
 
-    public Book(String title, int year, String publisher, String isbn, String author) {
+    public Book(String title, int year, String publisher, String isbn, Author author) {
         this.title = title;
         this.year = year;
         this.publisher = publisher;
@@ -80,11 +95,11 @@ public class Book {
         this.isbn = isbn;
     }
 
-    public String getAuthor() {
+    public Author getAuthor() {
         return author;
     }
 
-    public void setAuthor(String author) {
+    public void setAuthor(Author author) {
         this.author = author;
     }
 
