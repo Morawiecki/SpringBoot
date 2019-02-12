@@ -24,7 +24,9 @@ public class BookLibraryApplicationTests {
 	@Test
 	public void getBookByAuthorTest(){
 		Collection<Book> books = bookRepository.getBooksByAuthor("Henryk Sienkiewicz");
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>" + books.size() + "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>===<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> " + books.size() + " <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>===<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
 	}
 
 }
