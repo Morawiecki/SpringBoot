@@ -47,18 +47,21 @@ public class AppStarter implements CommandLineRunner {
     }
 
     public void init(){
-        Book book = new Book("W pustyni",1951,"PWN","kjhkh344346",new Author("Mieczysław Bąk"));
+        Book book = new Book("W pustyni",1951,"PWN","kjhkh344346",new Author("Mieczysław Bączek"));
         //bookRepository.saveBook(book);
         bookService.saveBook(book);
 
-        Book book2 = new Book("I w puszczy",1952,"PWN","kjhkh344347",new Author("Mieczysław Bąk junior"));
+        Book book2 = new Book("I w puszczy",1952,"PWN","kjhkh344347",new Author("Wiesław Pajączek"));
         bookService.saveBook(book2);
 
-        Book book3 = new Book("I w kamieniołomach",1952,"PWN","kjhkh344347",new Author("Mieczysław Bąk"));
+        Book book3 = new Book("I w kamieniołomach",1952,"PWN","kjhkh344347",new Author("Lesław Ciem"));
         bookService.saveBook(book3);
 
-        Book book4 = new Book("I w mleczarni",1991,"PWN","TYR5825847",new Author("Flak Roman"));
+        Book book4 = new Book("I w mleczarni",1991,"PWN","TYR5825847",new Author("Henryk Sienkiewicz"));
         bookService.saveBook(book4);
+
+        Book book5 = new Book("Mleczna z kaszanką - nowoczesna kuchnia",1999,"PWN","YTY1484848",new Author("Henryk Sienkiewicz"));
+        bookService.saveBook(book5);
     }
 
     /*@Autowired

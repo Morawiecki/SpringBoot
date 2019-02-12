@@ -25,9 +25,9 @@ public class Book {
     @Size(min = 2, message = "Tytuł musi posiadać co najmniej 2 litery")
     private String title;
 
-    @NotNull
+    @NotNull(message = "Pole nie może być puste.")
     @Range(min = 1, max = 9999, message = "Rok wydania musi być z przedziału 1 - 9999")
-    private int year;
+    private Integer year;
 
     @NotNull
     @Size(min = 1, message = "Wydawca musi posiadać co najmniej 1 znak")
@@ -74,7 +74,11 @@ public class Book {
         return title;
     }
 
-    public int getYear() {
+    public void setYear(Integer year) {
+        this.year = year;
+    }
+
+    public Integer getYear() {
         return year;
     }
 
@@ -88,10 +92,6 @@ public class Book {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public void setYear(int year) {
-        this.year = year;
     }
 
     public void setPublisher(String publisher) {
@@ -109,6 +109,8 @@ public class Book {
     public void setAuthor(Author author) {
         this.author = author;
     }
+
+
 
     @Override
     public String toString() {
