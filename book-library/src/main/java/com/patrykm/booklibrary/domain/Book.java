@@ -3,6 +3,7 @@ package com.patrykm.booklibrary.domain;
 import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -37,6 +38,7 @@ public class Book {
     private String isbn;
 
     @OneToOne
+    @Valid
     private Author author;
 
     public Book(){

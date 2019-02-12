@@ -13,6 +13,7 @@ public class Author {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
+
     @NotNull
     @Size(min = 5, message = "Imię i nazwisko autora musi posiadać co najmniej 5 liter")
     private String name;
