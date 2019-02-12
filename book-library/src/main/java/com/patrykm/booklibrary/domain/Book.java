@@ -28,7 +28,12 @@ public class Book {
     @Range(min = 1, max = 9999, message = "Rok wydania musi być z przedziału 1 - 9999")
     private int year;
 
+    @NotNull
+    @Size(min = 1, message = "Wydawca musi posiadać co najmniej 1 znak")
     private String publisher;
+
+    @NotNull
+    @Size(min = 6, message = "ISBN musi posiadać co najmnie 6 znaków")
     private String isbn;
 
     @OneToOne
