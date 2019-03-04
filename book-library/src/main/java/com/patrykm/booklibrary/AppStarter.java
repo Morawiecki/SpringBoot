@@ -4,6 +4,7 @@ import com.patrykm.booklibrary.domain.Author;
 import com.patrykm.booklibrary.domain.Book;
 import com.patrykm.booklibrary.repository.BookRepository;
 import com.patrykm.booklibrary.services.BookService;
+import com.patrykm.booklibrary.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
@@ -34,6 +35,9 @@ public class AppStarter implements CommandLineRunner {
     //BookRepository bookRepository;
     BookService bookService;
 
+    @Autowired
+    UserService userService;
+
     @Override
     public void run(String... args) throws Exception {
         /*System.out.println(book);
@@ -43,6 +47,7 @@ public class AppStarter implements CommandLineRunner {
         System.out.println(book2);
         System.out.println(book == book2);*/
         init();
+        initUsers();
 
     }
 
@@ -65,6 +70,20 @@ public class AppStarter implements CommandLineRunner {
 
         Book book6 = new Book("Sliwowica",1997,"PWN","BWW1478547",new Author("Albertsson Knot-Knutsen"));
         bookService.saveBook(book6);
+
+        Book book7 = new Book("Java dla łopornych",2019,"PWN&Spółka","JAVA123123",new Author("Chuck Norris"));
+        bookService.saveBook(book7);
+    }
+
+    public void initUsers(){
+        userService.createUser("admin","pass");
+        userService.addRoleUser("admin","ADMIN");
+        userService.addRoleUser("admin","DEV");
+        userService.addRoleUser("admin","USER");
+
+        userService.createUser("user","pass2");
+        userService.addRoleUser("user","USER");
+
     }
 
     /*@Autowired
