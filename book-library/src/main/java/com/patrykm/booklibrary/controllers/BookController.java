@@ -29,7 +29,7 @@ public class BookController {
 
         @RequestMapping(value = "/books/delete/{id}", method = RequestMethod.GET)
         public String removeBook(@PathVariable("id") Integer id){
-            bookService.removeBook(id);
+            bookService.deleteBook(id);
             return "redirect:/books";
         }
 

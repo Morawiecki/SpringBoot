@@ -1,11 +1,13 @@
 package com.patrykm.booklibrary.restcontrollers;
 
 import com.patrykm.booklibrary.domain.Book;
+import com.patrykm.booklibrary.restControllers.ExceptionDetails;
 import com.patrykm.booklibrary.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,13 +30,13 @@ public class BookRestController {
     }
 
     @RequestMapping(value = "/books/delete/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Void> removeBook(@PathVariable("id") Integer id){
+    public ResponseEntity<Void> deleteBook(@PathVariable("id") Integer id){
         Book book = bookService.getBook(id);
 
         if(book == null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
-        bookService.removeBook(id);
+        bookService.deleteBook(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -75,5 +77,46 @@ public class BookRestController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
         return new ResponseEntity<>(book, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/books/getByAuthor", method = RequestMethod.GET)
+    public ResponseEntity<List<Book>> getBooksByAuthor (@RequestParam(name = "author", required = true) String authorName) {
+        List<Book> books = bookService.getBookByAuthor(authorName);
+
+        if (books == null)
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+        return new ResponseEntity<>(books, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/books/get", method = RequestMethod.GET)
+    public ResponseEntity<List<Book>> getBooks(@RequestParam(value = "year", required = false) Integer year,
+                                               @RequestParam(value = "publisher", required = false) String publisher,
+                                               @RequestParam(value = "isbn", required = false) String isbn){
+
+        List<Book> books = bookService.getBooks(year, publisher, isbn);
+
+        if (books == null)
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+        return new ResponseEntity<>(books, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/books/getByTitle", method = RequestMethod.GET)
+    public ResponseEntity<List<Book>> getBooksByTirle (@RequestParam(name = "title", required = true) String title){
+        List<Book> books = bookService.getBookByTitle(title);
+
+        if (books == null)
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+        return new ResponseEntity<>(books, HttpStatus.OK);
+    }
+
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public ResponseEntity<ExceptionDetails> exceptionHandler(MissingServletRequestParameterException ex) {
+        ExceptionDetails exceptionDetails = new ExceptionDetails(ex.getClass().getSimpleName(), ex.getMessage());
+
+
+        return new ResponseEntity<>(exceptionDetails,HttpStatus.BAD_REQUEST);
     }
 }

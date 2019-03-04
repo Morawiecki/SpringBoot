@@ -38,10 +38,10 @@ public class BookService {
         }
     }
 
-    public void removeBook(int id){
+    public void deleteBook(int id) {
         Book bookToRemove = bookRepository.getBook(id);
         Author authorToRemove = bookToRemove.getAuthor();
-        bookRepository.removeBook(bookToRemove);
+        bookRepository.deleteBook(bookToRemove);
         authorRepository.removeAuthor(authorToRemove);
     }
 
@@ -53,5 +53,23 @@ public class BookService {
 
     public Book getBook(int id){
        return bookRepository.getBook(id);
+    }
+
+    public List<Book> getBookByAuthor (String authorName) {
+        if(authorName != null){
+            return new ArrayList<>(bookRepository.getBooksByAuthor(authorName));
+        } else
+            return null;
+    }
+
+    public List<Book> getBooks(Integer year, String publisher, String isbn) {
+        return new ArrayList<>(bookRepository.getBooks(year,publisher,isbn));
+    }
+
+    public List<Book> getBookByTitle (String title) {
+        if(title != null){
+            return new ArrayList<>(bookRepository.getBooksByTitle(title));
+        } else
+            return null;
     }
 }

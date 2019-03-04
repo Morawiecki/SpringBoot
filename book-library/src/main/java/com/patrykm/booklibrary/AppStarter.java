@@ -62,6 +62,9 @@ public class AppStarter implements CommandLineRunner {
 
         Book book5 = new Book("Mleczna z kaszanką - nowoczesna kuchnia",1999,"PWN","YTY1484848",new Author("Henryk Sienkiewicz"));
         bookService.saveBook(book5);
+
+        Book book6 = new Book("Sliwowica",1997,"PWN","BWW1478547",new Author("Albertsson Knot-Knutsen"));
+        bookService.saveBook(book6);
     }
 
     /*@Autowired
