@@ -16,24 +16,32 @@ public class UserRepository {
     private EntityManager em;
 
     @Transactional
-    public void addUser(User user){
-        if(user != null)
-            em.persist(user);
-    }
+    public void addUser(User user) {
+        if(user != null) {
+            boolean userExists = getUser(user.getUsername()) != null;
 
-    @Transactional
-    public void addRoleToUser(User user, Role role) {
-        if (user != null && role != null) {
-            user.addRole(role);
-            role.setUser(user);
-            em.persist(role);
-            em.merge(user);
+            if(!userExists)
+                em.persist(user);
         }
     }
 
-    public User getUser(String username){
+    @Transactional
+    public void addRoleToUser(String username, Role role){
+        if(username != null && role != null) {
+            User user = getUser(username);
+
+            if(user != null) {
+                user.addRole(role);
+                role.setUser(user);
+                em.persist(role);
+                em.merge(user);
+            }
+        }
+    }
+
+    public User getUser(String username) {
         List<User> users = em.createQuery("from User u where u.username = :username", User.class)
-                .setParameter("username",username).getResultList();
+                .setParameter("username", username).getResultList();
 
         if(users == null)
             return null;
@@ -43,4 +51,5 @@ public class UserRepository {
 
         return users.get(0);
     }
+
 }
