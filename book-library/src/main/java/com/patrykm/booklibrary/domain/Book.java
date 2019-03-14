@@ -8,6 +8,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Set;
 
 @Entity
 //@Table(name = "book")
@@ -40,6 +41,10 @@ public class Book {
     @OneToOne
     @Valid
     private Author author;
+
+    @OneToMany(mappedBy = "hiredBook", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Hire> hires;
+
 
     public Book(){
 

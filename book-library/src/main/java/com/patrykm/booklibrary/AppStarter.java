@@ -46,8 +46,9 @@ public class AppStarter implements CommandLineRunner {
         System.out.println(size);
         System.out.println(book2);
         System.out.println(book == book2);*/
-        init();
-        initUsers();
+
+        //init();
+        //initUsers();
 
     }
 
