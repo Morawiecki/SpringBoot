@@ -4,6 +4,8 @@ import com.patrykm.booklibrary.domain.Role;
 import com.patrykm.booklibrary.domain.User;
 import com.patrykm.booklibrary.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -34,13 +36,26 @@ public class UserService {
     }
 
     //@Transactional
-    public void addRoleUser(String username, String roleName){
-        if(username != null && roleName != null){
+    public void addRoleUser(String username, String roleName) {
+        if (username != null && roleName != null) {
             Role role = new Role(roleName);
-            userRepository.addRoleToUser(username,role);
-
+            userRepository.addRoleToUser(username, role);
         }
-
     }
+
+    public User getUser(String username) {
+        return userRepository.getUser(username);
+    }
+
+    public User getLoggedUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        if(auth != null){
+            String username = auth.getName();
+            return getUser(username);
+        }else
+            return null;
+    }
+
 
 }

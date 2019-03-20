@@ -4,6 +4,7 @@ import com.patrykm.booklibrary.domain.Author;
 import com.patrykm.booklibrary.domain.Book;
 import com.patrykm.booklibrary.repository.BookRepository;
 import com.patrykm.booklibrary.services.BookService;
+import com.patrykm.booklibrary.services.HireService;
 import com.patrykm.booklibrary.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -38,6 +39,9 @@ public class AppStarter implements CommandLineRunner {
     @Autowired
     UserService userService;
 
+    @Autowired
+    HireService hireService;
+
     @Override
     public void run(String... args) throws Exception {
         /*System.out.println(book);
@@ -49,6 +53,8 @@ public class AppStarter implements CommandLineRunner {
 
         //init();
         //initUsers();
+
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>> " + hireService.getHiresByBookId(4).size());
 
     }
 
