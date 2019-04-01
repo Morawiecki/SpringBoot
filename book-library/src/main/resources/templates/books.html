@@ -10,52 +10,46 @@
     <script th:src="@{/webjars/bootstrap/4.2.1/js/bootstrap.min.js}"></script>
 </head>
 <body>
-    <div class="container">
-        <div class="float-left">
-            <p th:text="${'Witaj, ' + user.firstName + ' ' + user.lastName + ' (' + user.username + ')'}"></p>
-        </div>
-
-        <div class="text-right">
-            <form action="#" th:action="@{/logout}" method="post">
-                <button type="submit" class="btn btn-primary float-right">Wyloguj</button>
-            </form>
-        </div>
-
-
-        <table class="table">
-            <thead class="thead-dark">
-                <th>Tytuł ksiązki</th>
-                <th>Rok wydania</th>
-                <th>Wydawca</th>
-                <th>ISBN</th>
-                <th>Autor</th>
-                <th>Wypożyczenia</th>
-                <th></th>
-                <th></th>
-            </thead>
-            <tbody th:each="element : ${books}">
-                <tr>
-                    <td th:text=${element.title}></td>
-                    <td th:text=${element.year}></td>
-                    <td th:text=${element.publisher}></td>
-                    <td th:text=${element.isbn}></td>
-                    <td th:text=${element.author.name}></td>
-                    <td><a th:href="${'/books/hires/' + element.id}">Pokaż</td></a></td>
-                    <td><a th:href="${'/books/edit/' + element.id}">Edytuj</td></a></td>
-                    <td><a th:href="${'/books/delete/' + element.id}">Usuń</td></a></td>
-                </tr>
-            </tbody>
-        </table>
-        <div class="row">
-            <a th:href="${'/books/add'}">Dodaj książkę</a>
-        </div>
-        <div class="text-right">
-            <form action="#" th:action="@{/logout}" method="post">
-                <button type="submit" class="btn btn-primary float-right">Wyloguj</button>
-            </form>
-        </div>
-
-
-        </div>
+<div class="container">
+    <div class="float-left">
+        <p th:text="${'Witaj, ' + user.firstName + ' ' + user.lastName + ' (' + user.username + ')'}"></p>
+    </div>
+    <div class="float-right">
+        <form action="#" th:action="@{/logout}" method="post">
+            <button type="submit" class="btn btn-primary">Wyloguj</button>
+        </form>
+    </div>
+    <table class="table">
+        <thead class="thead-dark">
+        <th>Tytuł książki</th>
+        <th>Rok wydania</th>
+        <th>Wydawca</th>
+        <th>ISBN</th>
+        <th>Autor</th>
+        <th>Wypożyczenia</th>
+        <th></th>
+        <th></th>
+        </thead>
+        <tbody th:each="element : ${books}">
+        <tr>
+            <td th:text=${element.title}></td>
+            <td th:text=${element.year}></td>
+            <td th:text=${element.publisher}></td>
+            <td th:text=${element.isbn}></td>
+            <td th:text=${element.author.name}></td>
+            <td>
+                <a th:href="${'/books/hire/' + element.id}">Wypożycz</a>
+                <br>
+                <a th:href="${'/books/hires/' + element.id}">Pokaż</a>
+            </td>
+            <td><a th:href="${'/books/edit/' + element.id}">Edytuj</a></td>
+            <td><a th:href="${'/books/delete/' + element.id}">Usuń</a></td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="row">
+        <a th:href="${'/books/add'}">Dodaj książkę</a>
+    </div>
+</div>
 </body>
 </html>

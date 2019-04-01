@@ -2,6 +2,7 @@ package com.patrykm.booklibrary;
 
 import com.patrykm.booklibrary.domain.Author;
 import com.patrykm.booklibrary.domain.Book;
+import com.patrykm.booklibrary.domain.Hire;
 import com.patrykm.booklibrary.repository.BookRepository;
 import com.patrykm.booklibrary.services.BookService;
 import com.patrykm.booklibrary.services.HireService;
@@ -11,6 +12,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
+
+import java.util.Date;
 
 @Component
 @PropertySource("classpath:custom.properties")
@@ -53,6 +56,11 @@ public class AppStarter implements CommandLineRunner {
 
         //init();
         //initUsers();
+        /*Hire hire = new Hire();
+        hire.setHireDate(new Date());
+        hire.setHiredBook(bookService.getBook(4));
+        hire.setHireUser(userService.getLoggedUser());*/
+
 
         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>> " + hireService.getHiresByBookId(4).size());
 

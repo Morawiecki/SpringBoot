@@ -22,4 +22,7 @@ public interface HireRepository extends JpaRepository<Hire, Long> {
     //@Query("SELECT h FROM Hire h WHERE")
     List<Hire> findByHiredBook_Id(Integer id);
 
+    @Transactional
+    Hire save(Hire hire);
+
 }
