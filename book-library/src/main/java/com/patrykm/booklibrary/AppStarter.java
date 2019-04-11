@@ -42,8 +42,10 @@ public class AppStarter implements CommandLineRunner {
     @Autowired
     UserService userService;
 
+    /*
     @Autowired
     HireService hireService;
+    */
 
     @Override
     public void run(String... args) throws Exception {
@@ -61,9 +63,9 @@ public class AppStarter implements CommandLineRunner {
         hire.setHiredBook(bookService.getBook(4));
         hire.setHireUser(userService.getLoggedUser());*/
 
-
+/*
         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>> " + hireService.getHiresByBookId(4).size());
-
+*/
     }
 
     public void init(){

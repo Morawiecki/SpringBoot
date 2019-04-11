@@ -1,9 +1,12 @@
 package com.patrykm.booklibrary.services;
 
+import com.patrykm.booklibrary.domain.Book;
 import com.patrykm.booklibrary.domain.Hire;
+import com.patrykm.booklibrary.domain.User;
 import com.patrykm.booklibrary.repository.BookRepository;
 import com.patrykm.booklibrary.repository.HireRepository;
 import com.patrykm.booklibrary.repository.UserRepository;
+import com.patrykm.booklibrary.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -34,17 +37,29 @@ public class HireService {
     }
 
 
-    public void save(Integer bookId){
-        Hire hire = new Hire();
-        hire.setHiredBook(bookRepository.getBook(bookId));
-        hire.setHireUser(userService.getLoggedUser());
-        hire.setHireDate(new Date());
+    public Hire hire(Integer bookId){
+        boolean isBookAvailable = hireRepository.findBookByIdNoGiveBack(bookId).isEmpty();
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(hire.getHireDate());
-        calendar.add(Calendar.DATE,giveBackDays);
+        if(isBookAvailable){
+            Book book = bookRepository.getBook(bookId);
+            User user = userService.getLoggedUser();
 
-        hire.setPlannedGiveBackDate(calendar.getTime());
-        hireRepository.save(hire);
+            if(book != null && user != null){
+                Hire hire = new Hire();
+                hire.setHiredBook(book);
+                hire.setHireUser(user);
+
+                Date hireDate = new Date();
+                Date plannedGiveBackDate = DateUtils.addDaysToDate(hireDate, giveBackDays);
+
+                hire.setHireDate(hireDate);
+                hire.setPlannedGiveBackDate(plannedGiveBackDate);
+
+                hireRepository.save(hire);
+                return hire;
+
+            }
+        }
+        return null;
     }
 }
