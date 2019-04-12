@@ -30,4 +30,7 @@ public interface HireRepository extends JpaRepository<Hire, Long> {
     List<Hire> findBookByIdNoGiveBack(@Param("bookId") Integer id);
 
 
+    List<Hire> findByHireUser_Id(Integer id);
+
+
 }

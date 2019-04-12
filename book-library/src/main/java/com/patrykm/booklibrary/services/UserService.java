@@ -2,6 +2,7 @@ package com.patrykm.booklibrary.services;
 
 import com.patrykm.booklibrary.domain.Role;
 import com.patrykm.booklibrary.domain.User;
+import com.patrykm.booklibrary.dto.UserDto;
 import com.patrykm.booklibrary.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -57,5 +58,14 @@ public class UserService {
             return null;
     }
 
+    public UserDto convert(User user){
+        if(user == null)
+            return null;
+
+        UserDto userDto = new UserDto();
+        userDto.setUsername(user.getUsername());
+        userDto.setFullName(user.getFirstName() + " " + user.getLastName());
+        return userDto;
+    }
 
 }

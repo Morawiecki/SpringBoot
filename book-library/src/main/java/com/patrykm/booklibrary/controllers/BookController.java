@@ -2,6 +2,8 @@ package com.patrykm.booklibrary.controllers;
 
 import com.patrykm.booklibrary.domain.Book;
 import com.patrykm.booklibrary.domain.User;
+import com.patrykm.booklibrary.dto.BookDto;
+import com.patrykm.booklibrary.dto.UserDto;
 import com.patrykm.booklibrary.services.BookService;
 import com.patrykm.booklibrary.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,7 @@ public class BookController {
     @Autowired
     UserService userService;
 
+
     @RequestMapping(value = "/",method =RequestMethod.GET)
     public String redirectToMainPage(){
         return "redirect:/books";
@@ -33,8 +36,8 @@ public class BookController {
 
         @RequestMapping(value = "/books", method = RequestMethod.GET)
         public String getBooks(Model model){
-            List<Book> books = bookService.getBooks();
-            User loggedUser = userService.getLoggedUser();
+            List<BookDto> books = bookService.convert(bookService.getBooks());
+            UserDto loggedUser = userService.convert(userService.getLoggedUser());
             model.addAttribute("books",books);
             model.addAttribute("user",loggedUser);
             return "books";

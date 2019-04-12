@@ -62,4 +62,8 @@ public class HireService {
         }
         return null;
     }
+
+    public List<Hire> getHireListByUserId(Integer id){
+        return hireRepository.findByHireUser_Id(id);
+    }
 }

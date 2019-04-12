@@ -2,8 +2,11 @@ package com.patrykm.booklibrary.services;
 
 import com.patrykm.booklibrary.domain.Author;
 import com.patrykm.booklibrary.domain.Book;
+import com.patrykm.booklibrary.domain.Hire;
+import com.patrykm.booklibrary.dto.BookDto;
 import com.patrykm.booklibrary.repository.AuthorRepository;
 import com.patrykm.booklibrary.repository.BookRepository;
+import com.patrykm.booklibrary.repository.HireRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +20,9 @@ public class BookService {
 
     @Autowired
     AuthorRepository authorRepository;
+
+    @Autowired
+    HireRepository hireRepository;
 
     public List<Book> getBooks(){
         return new ArrayList<>(bookRepository.getBooks());
@@ -71,5 +77,37 @@ public class BookService {
             return new ArrayList<>(bookRepository.getBooksByTitle(title));
         } else
             return null;
+    }
+
+    public BookDto convert(Book book){
+        if(book == null)
+            return null;
+        BookDto bookDto = new BookDto();
+        bookDto.setId(book.getId());
+        bookDto.setTitle(book.getTitle());
+        bookDto.setYear(book.getYear());
+        bookDto.setPublisher(book.getPublisher());
+        bookDto.setIsbn(book.getIsbn());
+        bookDto.setAuthorName(book.getAuthor().getName());
+
+        List<Hire> hires = hireRepository.findBookByIdNoGiveBack(book.getId());
+
+        bookDto.setHireStatus(hires.size() > 0);
+        if(hires.size() > 0)
+            bookDto.setGiveBackDate(hires.get(0).getPlannedGiveBackDate()); //weź pierwszy element z kolekcji, tylko będzie jeden
+
+        return bookDto;
+    }
+
+    public List<BookDto> convert(List<Book> books){
+        if(books == null)
+            return null;
+
+        List<BookDto> bookDtoList = new ArrayList<>();
+        for(Book book : books)
+            bookDtoList.add(convert(book));
+
+        return bookDtoList;
+
     }
 }

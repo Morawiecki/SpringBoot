@@ -3,6 +3,8 @@ package com.patrykm.booklibrary.controllers;
 import com.patrykm.booklibrary.domain.Book;
 import com.patrykm.booklibrary.domain.Hire;
 import com.patrykm.booklibrary.domain.User;
+import com.patrykm.booklibrary.dto.BookDto;
+import com.patrykm.booklibrary.dto.UserDto;
 import com.patrykm.booklibrary.services.BookService;
 import com.patrykm.booklibrary.services.HireService;
 import com.patrykm.booklibrary.services.UserService;
@@ -39,8 +41,10 @@ public class HireController {
     @RequestMapping(value = "/books/hire/{id}",method = RequestMethod.GET)
     public String hire(Model model,@PathVariable("id") Integer id){
         Hire hire = hireService.hire(id);
-        List<Book> books = bookService.getBooks();
-        User loggedUser = userService.getLoggedUser();
+        //List<Book> books = bookService.getBooks();
+        List<BookDto> books = bookService.convert(bookService.getBooks());
+        //User loggedUser = userService.getLoggedUser();
+        UserDto loggedUser = userService.convert(userService.getLoggedUser());
         model.addAttribute("books",books);
         model.addAttribute("user",loggedUser);
         model.addAttribute("hireStatus",hire != null);
@@ -48,6 +52,15 @@ public class HireController {
         if(hire != null)
             model.addAttribute("giveBackDate",hire.getPlannedGiveBackDate());
         return "books";
+
+    }
+
+    @RequestMapping(value = "/user/hires}",method = RequestMethod.GET)
+    public String loggedUserHires(){
+        UserDto loggedUser = userService.convert(userService.getLoggedUser());
+        List<Hire> hires = hireService.getHireListByUserId(userService.getLoggedUser().getId());
+
+        return "own-hires";
 
     }
 }
