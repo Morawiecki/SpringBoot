@@ -42,13 +42,15 @@ public class AppStarter implements CommandLineRunner {
     @Autowired
     UserService userService;
 
-    /*
+
     @Autowired
     HireService hireService;
-    */
+
 
     @Override
     public void run(String... args) throws Exception {
+        //hireService.setHireAsGiveBack(34L);
+
         /*System.out.println(book);
         System.out.println(test);
         System.out.println(test1);

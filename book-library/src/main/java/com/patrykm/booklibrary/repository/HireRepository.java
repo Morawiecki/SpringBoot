@@ -2,6 +2,7 @@ package com.patrykm.booklibrary.repository;
 
 import com.patrykm.booklibrary.domain.Hire;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -29,8 +30,12 @@ public interface HireRepository extends JpaRepository<Hire, Long> {
     @Query("SELECT h FROM Hire h WHERE h.realGiveBackDate IS NULL AND h.hiredBook.id=:bookId")
     List<Hire> findBookByIdNoGiveBack(@Param("bookId") Integer id);
 
-
     List<Hire> findByHireUser_Id(Integer id);
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE Hire SET realGiveBackDate = CURRENT_TIME WHERE id =: hireId AND realGiveBackDate IS NULL")
+    void setHireAsGivedBack(@Param("hireId") Long id);
 
 
 }
