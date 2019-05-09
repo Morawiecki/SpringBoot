@@ -27,18 +27,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(HttpSecurity httpSecurity) throws Exception{
         httpSecurity.authorizeRequests()
-                .antMatchers("/h2-console/**").permitAll()
-                .antMatchers("/").hasAnyAuthority("ADMIN","USER")
+                //.antMatchers("/h2-console/**").permitAll()
+                .antMatchers("/api/**").hasAnyAuthority("DEV")
+                .antMatchers("/user/**").hasAnyAuthority("USER","ADMIN")
                 .antMatchers("/books").hasAnyAuthority("ADMIN","USER")
-                .antMatchers("/books/api").hasAnyAuthority("ADMIN","DEV")
+                .antMatchers("/books/hires/**").hasAnyAuthority("ADMIN")
+                .antMatchers("/admin/**").hasAnyAuthority("ADMIN")
                 .anyRequest().authenticated().and().formLogin().defaultSuccessUrl("/books")
+                .and().formLogin().defaultSuccessUrl("/books")
+                .and().exceptionHandling().accessDeniedPage("/access-denied")
                 .and().httpBasic();
 
         //httpSecurity.authorizeRequests()
         //        .antMatchers("/api").hasAnyAuthority("ADMIN","DEV");
 
-        httpSecurity.headers().frameOptions().disable();
-        httpSecurity.csrf().ignoringAntMatchers("/h2-console/**");
+        //httpSecurity.headers().frameOptions().disable();
+        //httpSecurity.csrf().ignoringAntMatchers("/h2-console/**");
     }
 
     @Autowired
