@@ -40,4 +40,7 @@ public interface HireRepository extends JpaRepository<Hire, Long> {
 
     @Query("SELECT h FROM Hire h WHERE h.realGiveBackDate IS NULL")
     List<Hire> findHiresNoGiveBack();
+
+    @Query("SELECT h FROM Hire h WHERE h.realGiveBackDate > h.plannedGiveBackDate AND h.realGiveBackDate IS NOT NULL AND h.hireUser.id=:id")
+    List<Hire> findExpiredHiresByUser(@Param("id") Integer id);
 }

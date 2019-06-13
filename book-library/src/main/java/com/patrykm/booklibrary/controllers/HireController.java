@@ -7,6 +7,7 @@ import com.patrykm.booklibrary.dto.BookDto;
 import com.patrykm.booklibrary.dto.UserDto;
 import com.patrykm.booklibrary.services.BookService;
 import com.patrykm.booklibrary.services.HireService;
+import com.patrykm.booklibrary.services.PaymentService;
 import com.patrykm.booklibrary.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Controller
@@ -28,6 +30,9 @@ public class HireController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    PaymentService paymentService;
 
     @RequestMapping(value = "/books/hires/{id}",method = RequestMethod.GET)
     public String getHires(Model model, @PathVariable("id") Integer id){
@@ -60,10 +65,13 @@ public class HireController {
         User loggedUser = userService.getLoggedUser();
         UserDto loggedUserDto = userService.convert(loggedUser);
         List<Hire> hires = hireService.getHireListByUserId(loggedUser.getId());
+        BigDecimal payment = paymentService.getPaymentSumByUser(loggedUser.getId());
+        BigDecimal penalty = paymentService.getPenaltySumByUser(loggedUser.getId());
 
         model.addAttribute("user",loggedUserDto);
         model.addAttribute("hires",hires);
-
+        model.addAttribute("payment",payment);
+        model.addAttribute("penalty",penalty);
 
         return "hires-own";
 
